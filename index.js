@@ -1,9 +1,13 @@
 const Discord = require('discord.js');
+const mongoose = require('mongoose');
 const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS,Discord.Intents.FLAGS.GUILD_MESSAGES] });
 const environment = require('dotenv').config({path: __dirname + '/.env'})
 
-client.on('ready', () => {
+client.on('ready', async () => {
+    await mongoose.connect(process.env.MONGO_URI || '', {
+        keepAlive: true,
+    });
     console.log("Bot started and running!");
 })
 
-client.login(process.env.token);
+client.login(process.env.TOKEN);
