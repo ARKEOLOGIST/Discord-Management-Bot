@@ -34,6 +34,7 @@ module.exports = {
         } catch (e)
         {
             console.error(e);
+            message.reply('An unexpected error occurred!');
         }
         if (existing_game)
         {
@@ -56,6 +57,7 @@ module.exports = {
             } catch (e)
             {
                 console.error(e);
+                message.reply('An unexpected error occurred!');
             }
             message.reply(`${game_name} is now assigned to ${user_name}!`);
         }
