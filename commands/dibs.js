@@ -43,8 +43,10 @@ module.exports = {
         }
         else
         {
-            game_name = game_name.replace(/['"]+/g, '');
-            user_name = user_name.replace(/['"]+/g, '');
+            game_name = Buffer.from(game_name,'utf-8').toString();
+            user_name = Buffer.from(user_name,'utf-8').toString();
+            game_name = game_name.replace(/["]+/g, '');
+            user_name = user_name.replace(/["]+/g, '');
             const game_assignment = new schema({
                 name: game_name,
                 reviewer: user_name
