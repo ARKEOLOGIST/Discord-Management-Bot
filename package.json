@@ -4,6 +4,7 @@
   "description": "A Discord bot to maintain the review working for Gameffine",
   "main": "index.js",
   "scripts": {
+    "start":"node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Arkadyuti Bandyopadhyay",
