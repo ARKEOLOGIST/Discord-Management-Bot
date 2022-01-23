@@ -36,7 +36,7 @@ module.exports = {
             });
             try {
                 existing_game = await game_assignment.save();
-                message.reply(`${game_name} is now added to the database.`);
+                message.reply(`${game_name} has been added to the database.`);
             } catch (e)
             {
                 console.error(e);
