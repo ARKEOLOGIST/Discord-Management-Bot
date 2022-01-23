@@ -38,9 +38,26 @@ module.exports = {
         }
         if (existing_game)
         {
-            const game_temp = game_name.replace(/['"]+/g, '');
-            const reviewer_temp = existing_game.reviewer.replace(/['"]+/g, '');
-            message.reply(`${game_temp} has already been claimed by ${reviewer_temp}!`);
+            if (existing_game.reviewer)
+            {
+                const game_temp = game_name.replace(/['"]+/g, '');
+                const reviewer_temp = existing_game.reviewer.replace(/['"]+/g, '');
+                message.reply(`${game_temp} has already been claimed by ${reviewer_temp}!`);
+            }
+            else
+            {
+                const game_temp = game_name.replace(/['"]+/g, '');
+                const reviewer_temp = user_name.replace(/['"]+/g, '');
+                try {
+                    existing_game = await schema.updateOne({ name: game_temp },{ reviewer: reviewer_temp });
+                    existing_game = await schema.save();
+                    message.reply(`${game_temp} is now assigned to ${reviewer_temp}!`);
+                } catch (e)
+                {
+                    console.error(e);
+                    message.reply('An unexpected error occurred!');
+                }
+            }
         }
         else
         {
@@ -54,12 +71,12 @@ module.exports = {
             });
             try {
                 existing_game = await game_assignment.save();
+                message.reply(`${game_name} is now assigned to ${user_name}!`);
             } catch (e)
             {
                 console.error(e);
                 message.reply('An unexpected error occurred!');
-            }
-            message.reply(`${game_name} is now assigned to ${user_name}!`);
+            }     
         }
     }
 }
