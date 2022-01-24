@@ -27,11 +27,28 @@ module.exports = {
         }
         if (existing_game)
         {
-            message.reply(`${game_name} has been assigned to ${existing_game.reviewer}!`);
+            if (existing_game.reviewer)
+            {
+                message.reply(`${game_name} has been assigned to ${existing_game.reviewer}!`);
+            }
+            else
+            {
+                message.reply(`${game_name} has not been assigned to anyone yet.`);
+            }
         }
         else
         {
-            message.reply(`${game_name} has not been assigned to anyone yet.`);
+            const game_assignment = new schema({
+                name: game_name,
+            });
+            try {
+                existing_game = await schema.create(game_assignment);
+                message.reply(`${game_name} has not been assigned to anyone yet.`);
+            } catch (e)
+            {
+                console.error(e);
+                message.reply('An unexpected error occurred!');
+            }
         }
     }
 }

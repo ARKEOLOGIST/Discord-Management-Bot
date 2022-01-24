@@ -28,6 +28,10 @@ module.exports = {
                 user_name += " ";
             }
         }
+        game_name = Buffer.from(game_name,'utf-8').toString();
+        user_name = Buffer.from(user_name,'utf-8').toString();
+        game_name = game_name.replace(/["]+/g, '');
+        user_name = user_name.replace(/["]+/g, '');
         let existing_game;
         try {
             existing_game = await schema.findOne({ name: game_name });
@@ -49,8 +53,8 @@ module.exports = {
                 const game_temp = game_name.replace(/['"]+/g, '');
                 const reviewer_temp = user_name.replace(/['"]+/g, '');
                 try {
-                    existing_game = await schema.updateOne({ name: game_temp },{ reviewer: reviewer_temp });
-                    existing_game = await schema.save();
+                    existing_game.reviewer = reviewer_temp;
+                    existing_game = await existing_game.updateOne({ reviewer: reviewer_temp });
                     message.reply(`${game_temp} is now assigned to ${reviewer_temp}!`);
                 } catch (e)
                 {
@@ -61,16 +65,12 @@ module.exports = {
         }
         else
         {
-            game_name = Buffer.from(game_name,'utf-8').toString();
-            user_name = Buffer.from(user_name,'utf-8').toString();
-            game_name = game_name.replace(/["]+/g, '');
-            user_name = user_name.replace(/["]+/g, '');
             const game_assignment = new schema({
                 name: game_name,
                 reviewer: user_name
             });
             try {
-                existing_game = await game_assignment.save();
+                existing_game = await schema.create(game_assignment);
                 message.reply(`${game_name} is now assigned to ${user_name}!`);
             } catch (e)
             {

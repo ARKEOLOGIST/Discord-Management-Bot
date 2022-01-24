@@ -35,7 +35,7 @@ module.exports = {
                 name: game_name,
             });
             try {
-                existing_game = await game_assignment.save();
+                existing_game = await schema.create(game_assignment);
                 message.reply(`${game_name} has been added to the database.`);
             } catch (e)
             {
