@@ -5,7 +5,7 @@ const getFiles = require('./getFiles');
 module.exports = (client) => {
     const commands = {};
     
-    const commandFiles = getFiles('./commands','.js');
+    const commandFiles = getFiles('./commands');
 
     for (const command of commandFiles)
     {
