@@ -67,11 +67,11 @@ module.exports = {
         {
             const game_assignment = new schema({
                 name: game_name,
-                reviewer: due_date
+                due_date: due_date
             });
             try {
                 existing_game = await schema.create(game_assignment);
-                message.reply(`${game_name} is now assigned to ${due_date}!`);
+                message.reply(`The review for ${game_temp} should be ready by ${due_date_temp}!`);
             } catch (e)
             {
                 console.error(e);
