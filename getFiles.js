@@ -13,7 +13,7 @@ const getFiles = (dir) => {
         {
             commandFiles = [
                 ...commandFiles,
-                ...getFiles(`${dir}/${file.name}`,'.js'),
+                ...getFiles(`${dir}/${file.name}`),
             ];
         } else if (file.name.endsWith('.js'))
         {
